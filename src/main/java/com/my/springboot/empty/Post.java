@@ -7,12 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import lombok.Data;
 
-/**
- * @TableName catbar
- */
-@TableName(value = "catbar")
+@TableName(value = "postbar")
 @Data
-public class Cat implements Serializable {
+public class Post implements Serializable {
     private Long id;
 
     private String name;

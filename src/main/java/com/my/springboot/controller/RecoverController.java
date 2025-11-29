@@ -1,8 +1,6 @@
 package com.my.springboot.controller;
 
-import com.my.springboot.empty.Cat;
 import com.my.springboot.empty.Recover;
-import com.my.springboot.service.impl.CatServiceImpl;
 import com.my.springboot.service.impl.RecoverServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +35,12 @@ public class RecoverController {
     @PostMapping("/delRecoverById")
     public ResponseEntity delRecoverById(@RequestParam("Id") Long Id) {
         return recoverService.delRecoverById(Id);
+    }
+
+    @ApiOperation("获取自己的回复")
+    @PostMapping("/getMyRecoverData")
+    public ResponseEntity getMyRecoverData() {
+        return recoverService.getMyRecoverData();
     }
 
 }

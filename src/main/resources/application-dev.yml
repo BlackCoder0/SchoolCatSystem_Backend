@@ -83,7 +83,7 @@ mybatis-plus:
     #    输出sql语句到控制台
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapperscan:
-    basepackage: com.my.springboot.**
+    basepackage: com.my.springboot.mapper
 
 #自定义参数 生成api接口文档 扫描包设置
 swagger2:

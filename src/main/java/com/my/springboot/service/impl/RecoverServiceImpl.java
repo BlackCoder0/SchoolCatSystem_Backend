@@ -50,6 +50,19 @@ public class RecoverServiceImpl extends ServiceImpl<RecoverMapper, Recover>
             return ResponseJson.fail(400, "删除失败");
         }
     }
+
+    @Override
+    public ResponseEntity getMyRecoverData() {
+        LambdaQueryWrapper<Recover> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        String userName = (String) org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        lambdaQueryWrapper.eq(Recover::getName, userName);
+        List<Recover> list = list(lambdaQueryWrapper);
+        Map<String, Object> map = new HashMap<>();
+        map.put("datalist", list);
+        List<Object> dataList = new ArrayList<>();
+        dataList.add(map);
+        return ResponseJson.success(dataList);
+    }
 }
 
 

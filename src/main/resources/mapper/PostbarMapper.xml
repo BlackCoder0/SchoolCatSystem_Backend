@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.my.springboot.mapper.CatMapper">
+<mapper namespace="com.my.springboot.mapper.PostMapper">
 
-    <resultMap id="BaseResultMap" type="com.my.springboot.empty.Cat">
+    <resultMap id="BaseResultMap" type="com.my.springboot.empty.Post">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="huati" column="huati" jdbcType="VARCHAR"/>

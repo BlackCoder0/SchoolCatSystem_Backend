@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.my.springboot.empty.Cat;
-import com.my.springboot.service.CatService;
-import com.my.springboot.mapper.CatMapper;
+import com.my.springboot.empty.Post;
+import com.my.springboot.service.PostService;
+import com.my.springboot.mapper.PostMapper;
 import com.my.springboot.utils.Result.ResponseJson;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CatServiceImpl extends ServiceImpl<CatMapper, Cat>
-        implements CatService {
+public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
+        implements PostService {
 
     @Override
-    public ResponseEntity addData(Cat cat) {
-        if (save(cat)) {
+    public ResponseEntity addData(Post post) {
+        if (save(post)) {
             return ResponseJson.success("新增失败");
         } else {
             return ResponseJson.fail(400, "新增失败");
@@ -31,8 +31,8 @@ public class CatServiceImpl extends ServiceImpl<CatMapper, Cat>
 
     @Override
     public ResponseEntity getAllData() {
-        LambdaQueryWrapper<Cat> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        List<Cat> list = list(lambdaQueryWrapper);
+        LambdaQueryWrapper<Post> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        List<Post> list = list(lambdaQueryWrapper);
         Map<String, Object> map = new HashMap<>();
         map.put("datalist", list);
         List<Object> dataList = new ArrayList<>();
@@ -41,13 +41,13 @@ public class CatServiceImpl extends ServiceImpl<CatMapper, Cat>
     }
 
     @Override
-    public ResponseEntity updateDataById(Cat cat) {
-        LambdaUpdateWrapper<Cat> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        lambdaUpdateWrapper.eq(Cat::getId, cat.getId());
-        lambdaUpdateWrapper.set(Cat::getName, cat.getName());
-        lambdaUpdateWrapper.set(Cat::getContent, cat.getContent());
-        lambdaUpdateWrapper.set(Cat::getHuati, cat.getHuati());
-        lambdaUpdateWrapper.set(Cat::getTime, cat.getTime());
+    public ResponseEntity updateDataById(Post post) {
+        LambdaUpdateWrapper<Post> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(Post::getId, post.getId());
+        lambdaUpdateWrapper.set(Post::getName, post.getName());
+        lambdaUpdateWrapper.set(Post::getContent, post.getContent());
+        lambdaUpdateWrapper.set(Post::getHuati, post.getHuati());
+        lambdaUpdateWrapper.set(Post::getTime, post.getTime());
         if (update(lambdaUpdateWrapper)) {
             return ResponseJson.success("修改成功");
         }
@@ -56,9 +56,9 @@ public class CatServiceImpl extends ServiceImpl<CatMapper, Cat>
 
     @Override
     public ResponseEntity getDataById(Long id) {
-        LambdaQueryWrapper<Cat> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Cat::getId, id);
-        List<Cat> list = list(lambdaQueryWrapper);
+        LambdaQueryWrapper<Post> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Post::getId, id);
+        List<Post> list = list(lambdaQueryWrapper);
         Map<String, Object> map = new HashMap<>();
         map.put("datalist", list);
         List<Object> dataList = new ArrayList<>();
@@ -77,9 +77,22 @@ public class CatServiceImpl extends ServiceImpl<CatMapper, Cat>
 
     @Override
     public ResponseEntity getDataLikeKey(String key) {
-        LambdaQueryWrapper<Cat> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(Cat::getHuati, key);
-        List<Cat> list = list(lambdaQueryWrapper);
+        LambdaQueryWrapper<Post> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.like(Post::getHuati, key);
+        List<Post> list = list(lambdaQueryWrapper);
+        Map<String, Object> map = new HashMap<>();
+        map.put("datalist", list);
+        List<Object> dataList = new ArrayList<>();
+        dataList.add(map);
+        return ResponseJson.success(dataList);
+    }
+
+    @Override
+    public ResponseEntity getMyData() {
+        LambdaQueryWrapper<Post> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        String userName = (String) org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        lambdaQueryWrapper.eq(Post::getName, userName);
+        List<Post> list = list(lambdaQueryWrapper);
         Map<String, Object> map = new HashMap<>();
         map.put("datalist", list);
         List<Object> dataList = new ArrayList<>();

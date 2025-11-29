@@ -12,4 +12,6 @@ public interface RecoverService extends IService<Recover> {
     ResponseEntity getAllRecoverData(Long pid);
 
     ResponseEntity delRecoverById(Long id);
+
+    ResponseEntity getMyRecoverData();
 }
